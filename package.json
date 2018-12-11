@@ -1,0 +1,17 @@
+{
+  "name": "imgix-transformer",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "imgix"
+  ],
+  "author": "Emily Wu",
+  "license": "MIT",
+  "dependencies": {
+    "imgix-core-js": "^1.2.0"
+  }
+}
