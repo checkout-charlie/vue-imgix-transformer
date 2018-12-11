@@ -26,7 +26,7 @@ export default class ImgixTransformer {
 
   getImageElement(originalUrl, options) {
     const imgElement = document.createElement('img')
-    const url = this.getUrl(originalUrl, options)
+    const url = this.getTransformedUrl(originalUrl, options)
     imgElement.setAttribute('src', url)
 
     return imgElement
@@ -39,7 +39,7 @@ export default class ImgixTransformer {
       const wrapperEl = document.createElement('div')
       wrapperEl.innerHTML = match
       const imagePath = wrapperEl.firstChild.getAttribute('src')
-      wrapperEl.firstChild.src = this.getUrl(imagePath, options)
+      wrapperEl.firstChild.src = this.getTransformedUrl(imagePath, options)
 
       return wrapperEl.innerHTML
     }
