@@ -1,7 +1,7 @@
-import ImageHtmlTransformer from './src/ImageHtmlTransformer'
-import ImgixTransformer from './src/imgixTransformer'
+import ImageHtmlTransformer from './components/ImageHtmlTransformer.vue'
+import ImgixTransformer from './imgixTransformer.js'
 
-export default {
+const plugin = {
   install(Vue, options = {}) {
     const imgTransformer = new ImgixTransformer(options.domain)
 
@@ -12,3 +12,5 @@ export default {
     })
   }
 }
+
+export default plugin
