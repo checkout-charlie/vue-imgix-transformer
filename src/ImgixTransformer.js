@@ -24,6 +24,14 @@ export default class ImgixTransformer {
     return decodeURIComponent(this.client.buildURL(imagePath, options))
   }
 
+  getImageElement(originalUrl, options) {
+    const imgElement = document.createElement('img')
+    const url = this.getTransformedUrl(originalUrl, options)
+    imgElement.setAttribute('src', url)
+
+    return imgElement
+  }
+
   getTransformedHtml(originalHtml, options) {
     const search = /(<img[^>]+>)/gi
 
