@@ -16,7 +16,8 @@
     "build": "rollup -c && minify dist/vue-imgix-transformer.js --out-file dist/vue-imgix-transformer.min.js --mangle.keepClassName"
   },
   "dependencies": {
-    "imgix-core-js": "^1.2.0"
+    "imgix-core-js": "^1.2.0",
+    "lazysizes": "^4.1.5"
   },
   "engines": {
     "node": ">= 6.0.0",
