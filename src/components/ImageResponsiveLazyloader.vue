@@ -1,8 +1,10 @@
 <template>
-  <img :src="src"
+  <img :src="transformedSrc"
        srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-       :data-src="transformedSrc" :data-srcset="transformedSrcset"
-       :data-sizes="transformedSizes" :class="cssClasses"
+       :data-src="transformedDataSrc"
+       :data-srcset="transformedDataSrcset"
+       :data-sizes="transformedDataSizes"
+       :class="cssClasses"
        :alt="alt"
   />
 </template>
@@ -10,9 +12,17 @@
   export default {
     name: 'ImageResponsiveLazyloader',
     props: {
-      src: {
+      url: {
         default: '',
         type: String
+      },
+      src: {
+        default() {
+          return {
+            options: {}
+          }
+        },
+        type: Object
       },
       dataSrc: {
         default() {
@@ -26,8 +36,8 @@
         default() {
           return [
             {
-              options: {blur: 20},
-              width: '600w'
+              options: {},
+              width: ''
             }
           ]
         },
@@ -50,10 +60,11 @@
     },
     data() {
       return {
+        transformedSrc: '',
         cssClasses: '',
-        transformedSrc: {},
-        transformedSrcset: [],
-        transformedSizes: []
+        transformedDataSrc: {},
+        transformedDataSrcset: [],
+        transformedDataSizes: []
       }
     },
     mounted() {
@@ -61,16 +72,20 @@
     },
     methods: {
       transformData() {
-        const { options } = this.dataSrc
+        this.transformedSrc = this.$imgTransformer.getTransformedUrl(
+          this.url, this.src.options
+        )
         this.cssClasses = `lazyload ${this.classes}`
-        this.transformedSrc = this.$imgTransformer.getTransformedUrl(this.src, options)
-        this.transformedSrcset = this.dataSrcset.map(item => {
+        this.transformedDataSrc = this.$imgTransformer.getTransformedUrl(
+          this.url, this.dataSrc.options
+        )
+        this.transformedDataSrcset = this.dataSrcset.map(item => {
           const {options, width} = item
-          const transformedUrl = this.$imgTransformer.getTransformedUrl(this.src, options)
+          const transformedUrl = this.$imgTransformer.getTransformedUrl(this.url, options)
 
           return `${transformedUrl} ${width}`
         }).join(', ')
-        this.transformedSizes = this.dataSizes.join(', ')
+        this.transformedDataSizes = this.dataSizes.join(', ')
       }
     }
   }
