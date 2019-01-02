@@ -14,7 +14,7 @@ Please install `lazysizes` in your application
 
 * Responsive lazyload component
 
-```
+```vue
 <ImageResponsiveLazyloader
           url="myImage.jpg"
           :src="{options: {h: 150, w: 300}}"
@@ -29,11 +29,12 @@ Please install `lazysizes` in your application
               width: '640w'
             }
           ]"
-          :data-sizes="['(min-width: 640px) 50vw', '100vw']" // or ['auto']
+          :data-sizes="['(min-width: 640px) 50vw', '100vw']" 
           classes="image-big right"
           alt="Test image"
           title="Title of the image"
         />
+        // :data-sizes can be ['auto']
 ```
 
 ### Filter
