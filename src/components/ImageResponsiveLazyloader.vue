@@ -6,6 +6,7 @@
        :data-sizes="transformedDataSizes"
        :class="cssClasses"
        :alt="alt"
+       :title="title"
   />
 </template>
 <script>
@@ -54,6 +55,10 @@
         type: String
       },
       alt: {
+        default: '',
+        type: String
+      },
+      title: {
         default: '',
         type: String
       }
