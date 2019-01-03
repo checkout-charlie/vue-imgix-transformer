@@ -1,6 +1,6 @@
 <template>
   <img :src="transformedSrc"
-       srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+       :srcset="`data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==`"
        :data-src="transformedDataSrc"
        :data-srcset="transformedDataSrcset"
        :data-sizes="transformedDataSizes"
