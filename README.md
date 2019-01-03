@@ -34,8 +34,8 @@ Please install `lazysizes` in your application
           alt="Test image"
           title="Title of the image"
         />
-        // :data-sizes can be ['auto']
- /* It will render:
+        <!-- :data-sizes can be ['auto'] -->
+ <!-- It will render:
  <img src="https://test.imgix.net/dir/my-image.jpg?h=400&amp;w=600&amp;ixlib=js-1.2.0" 
  srcset="https://test.imgix.net/dir/my-image.jpg?h=200&amp;w=300&amp;ixlib=js-1.2.0 480w, https://test.imgix.net/dir/my-image.jpg?h=300&amp;w=600&amp;ixlib=js-1.2.0 640w" 
  data-src="https://test.imgix.net/dir/my-image.jpg?h=400&amp;w=600&amp;ixlib=js-1.2.0" 
@@ -45,7 +45,7 @@ Please install `lazysizes` in your application
  title="Title of the image"
  class="image-big right lazyload" 
  sizes="(min-width: 640px) 50vw, 100vw">
- */
+ -->
  
 ```
 
