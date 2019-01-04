@@ -4,7 +4,8 @@ import ImgixTransformer from './imgixTransformer.js'
 
 const plugin = {
   install(Vue, options = {}) {
-    const imgTransformer = new ImgixTransformer(options.domain)
+    const {domains, organizationUrlReg} = options
+    const imgTransformer = new ImgixTransformer(domains, organizationUrlReg)
 
     Vue.prototype.$imgTransformer = imgTransformer
 

@@ -1,24 +1,25 @@
 import ImgixClient from 'imgix-core-js'
 
 export default class ImgixTransformer {
-  constructor(imgixDomain) {
-    this.client = new ImgixClient({
-      domains: imgixDomain
-    })
+  constructor(domains, organizationUrlReg = /\b\B/) {
+    this.client = new ImgixClient({domains})
+
+    this.organizationUrlReg = organizationUrlReg
   }
 
   transformUrl(originalUrl, options) {
-    const completeUrl = /http/
-    const sparweltUrl = /sparwelt.de/
+    const completeUrlReg = /http/
+    const orgUrlReg = this.organizationUrlReg
     let imagePath = originalUrl
 
-    if (completeUrl.test(originalUrl)) {
-      if (!sparweltUrl.test(originalUrl)) {
+    if (completeUrlReg.test(originalUrl)) {
+      if (!orgUrlReg.test(originalUrl)) {
         return originalUrl
       }
 
-      originalUrl.split(sparweltUrl).shift()
-      imagePath = originalUrl[0]
+      const urlSplit = originalUrl.split(orgUrlReg)
+      urlSplit.shift()
+      imagePath = urlSplit[0]
     }
 
     return decodeURIComponent(this.client.buildURL(imagePath, options))
