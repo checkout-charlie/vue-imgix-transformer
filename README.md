@@ -20,7 +20,7 @@ In the options:
 
 **domains**: your Imgix domain(s).
 
-**organizationUrlReg**: the regex to check whether the url is your organization's complete url in raw html. If a complete image url including the company's original domain is used as the original image url, the image url's domain will be replaced by your Imgix domain. **E.g.**, `https://example.com/my-image.jpg` will be converted to `https://example.imgix.net/my-image.jpg`.
+**organizationUrlReg**: the regex to check whether the url is your organization's complete url in raw html. If a complete image url including the company's original domain is used as the original image url, the image url's domain will be replaced by your Imgix domain. **E.g.** `https://example.com/my-image.jpg` will be converted to `https://example.imgix.net/my-image.jpg`.
 
 ## Usage
 
