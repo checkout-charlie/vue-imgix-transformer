@@ -7,6 +7,10 @@
   "keywords": [
     "imgix", "Vue"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sparwelt/vue-imgix-transformer.git"
+  },
   "main": "dist/vue-imgix-transformer.common.js",
   "module": "dist/vue-imgix-transformer.esm.js",
   "unpkg": "dist/vue-imgix-transformer.min.js",
