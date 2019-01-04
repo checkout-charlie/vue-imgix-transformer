@@ -6,7 +6,7 @@ Please install `lazysizes` in your application
 
 ## Installation
 
-```vuejs
+```js
 import Vue from 'vue'
 import imgixTransformer from '@sparwelt/vue-imgix-transformer'
 
