@@ -7,7 +7,7 @@ export default class ImgixTransformer {
     })
   }
 
-  getTransformedUrl(originalUrl, options) {
+  transformUrl(originalUrl, options) {
     const completeUrl = /http/
     const sparweltUrl = /sparwelt.de/
     let imagePath = originalUrl
@@ -24,22 +24,26 @@ export default class ImgixTransformer {
     return decodeURIComponent(this.client.buildURL(imagePath, options))
   }
 
-  getImageElement(originalUrl, options) {
+  generateImageElement(originalUrl, options) {
     const imgElement = document.createElement('img')
-    const url = this.getTransformedUrl(originalUrl, options)
+    const url = this.transformUrl(originalUrl, options)
     imgElement.setAttribute('src', url)
 
     return imgElement
   }
 
-  getTransformedHtml(originalHtml, options) {
+  transformHtml(originalHtml, options) {
     const search = /(<img[^>]+>)/gi
+
+    if ('undefined' === typeof document) {
+      return
+    }
 
     const replacer = match => {
       const wrapperEl = document.createElement('div')
       wrapperEl.innerHTML = match
       const imagePath = wrapperEl.firstChild.getAttribute('src')
-      wrapperEl.firstChild.src = this.getTransformedUrl(imagePath, options)
+      wrapperEl.firstChild.src = this.transformUrl(imagePath, options)
 
       return wrapperEl.innerHTML
     }

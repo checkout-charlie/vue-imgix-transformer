@@ -12,6 +12,9 @@ export default {
     html: {
       default: null,
       type: String
+    },
+    options: {
+      type: Object
     }
   },
   data() {
@@ -19,14 +22,14 @@ export default {
       transformedHtml: ''
     }
   },
-  mounted() {
+  created() {
     if (this.html) {
       this.transformHtml()
     }
   },
   methods: {
     transformHtml() {
-      this.transformedHtml = this.$imgTransformer.getTransformedHtml(
+      this.transformedHtml = this.transformImgixUrlsInHtml(
         this.html,
         this.options
       )

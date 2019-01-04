@@ -7,10 +7,23 @@ const plugin = {
     const imgTransformer = new ImgixTransformer(options.domain)
 
     Vue.prototype.$imgTransformer = imgTransformer
+
     Vue.component(ImageHtmlTransformer.name, ImageHtmlTransformer)
     Vue.component(ImageResponsiveLazyloader.name, ImageResponsiveLazyloader)
+
     Vue.filter('transformUrl', (url, opts) => {
-      return imgTransformer.getTransformedUrl(url, opts)
+      return imgTransformer.transformUrl(url, opts)
+    })
+
+    Vue.mixin({
+      methods: {
+        transformImgixUrl(url, options) {
+          return imgTransformer.transformUrl(url, options)
+        },
+        transformImgixUrlsInHtml(html, options) {
+          return imgTransformer.transformHtml(html, options)
+        }
+      }
     })
   }
 }

@@ -53,5 +53,9 @@ Please install `lazysizes` in your application
 ```
 
 ### Filter
+`<img :src="'my-image.jpg' | transformUrl({blur: 50})">` (Before Vue 2.0)
 
-`<img :src="'my-image.jpg' | transformUrl({blur: 50})">`
+### Methods
+`<img :src="transformImgixUrl('my-image.jpg', {blur: 20})">`
+
+`<div v-html="transformImgixUrlsInHtml(html)"></div>`

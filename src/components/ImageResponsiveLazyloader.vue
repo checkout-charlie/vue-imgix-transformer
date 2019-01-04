@@ -66,27 +66,27 @@
     data() {
       return {
         transformedSrc: '',
-        cssClasses: '',
         transformedDataSrc: {},
         transformedDataSrcset: [],
-        transformedDataSizes: []
+        transformedDataSizes: [],
+        cssClasses: ''
       }
     },
-    mounted() {
+    created() {
       this.transformData()
     },
     methods: {
       transformData() {
-        this.transformedSrc = this.$imgTransformer.getTransformedUrl(
+        this.transformedSrc = this.transformImgixUrl(
           this.url, this.src.options
         )
         this.cssClasses = `lazyload ${this.classes}`
-        this.transformedDataSrc = this.$imgTransformer.getTransformedUrl(
+        this.transformedDataSrc = this.transformImgixUrl(
           this.url, this.dataSrc.options
         )
         this.transformedDataSrcset = this.dataSrcset.map(item => {
           const {options, width} = item
-          const transformedUrl = this.$imgTransformer.getTransformedUrl(this.url, options)
+          const transformedUrl = this.transformImgixUrl(this.url, options)
 
           return `${transformedUrl} ${width}`
         }).join(', ')
