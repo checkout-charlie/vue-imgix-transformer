@@ -4,13 +4,31 @@
 
 Please install `lazysizes` in your application
 
+## Installation
+
+```vuejs
+import Vue from 'vue'
+import imgixTransformer from '@sparwelt/vue-imgix-transformer'
+
+Vue.use(imgixTransformer, {
+  domains: example.imgix.net,
+  organizationUrlReg: /example.com/
+})
+```
+
+In the options: 
+
+**domains**: your Imgix domain(s).
+
+**organizationUrlReg**: the regex to check whether the url is your organization's complete url in raw html. If a complete image url including the company's original domain is used as the original image url, the image url's domain will be replaced by your Imgix domain. **E.g.**, `https://example.com/my-image.jpg` will be converted to `https://example.imgix.net/my-image.jpg`.
+
 ## Usage
 
 ### Vue components
 
 * Html transformer
 
-`<image-html-transformer html="<img src="myImage.jpg>" />`
+`<ImageHtmlTransformer html="<img src='my-image.jpg'>" />`
 
 * Responsive lazyload component
 
@@ -37,12 +55,12 @@ Please install `lazysizes` in your application
         <!-- :data-sizes can be ['auto'] -->
         
  <!-- It will render:
- <img src="https://test.imgix.net/dir/my-image.jpg?h=400&amp;w=600&amp;ixlib=js-1.2.0" 
- srcset="https://test.imgix.net/dir/my-image.jpg?h=200&amp;w=300&amp;ixlib=js-1.2.0 480w,
- https://test.imgix.net/dir/my-image.jpg?h=300&amp;w=600&amp;ixlib=js-1.2.0 640w" 
- data-src="https://test.imgix.net/dir/my-image.jpg?h=400&amp;w=600&amp;ixlib=js-1.2.0" 
- data-srcset="https://test.imgix.net/dir/my-image.jpg?h=200&amp;w=300&amp;ixlib=js-1.2.0 480w,
- https://test.imgix.net/dir/my-image.jpg?h=300&amp;w=600&amp;ixlib=js-1.2.0 640w" 
+ <img src="https://example.imgix.net/dir/my-image.jpg?h=400&amp;w=600&amp;ixlib=js-1.2.0" 
+ srcset="https://example.imgix.net/dir/my-image.jpg?h=200&amp;w=300&amp;ixlib=js-1.2.0 480w,
+ https://example.imgix.net/dir/my-image.jpg?h=300&amp;w=600&amp;ixlib=js-1.2.0 640w" 
+ data-src="https://example.imgix.net/dir/my-image.jpg?h=400&amp;w=600&amp;ixlib=js-1.2.0" 
+ data-srcset="https://example.imgix.net/dir/my-image.jpg?h=200&amp;w=300&amp;ixlib=js-1.2.0 480w,
+ https://example.imgix.net/dir/my-image.jpg?h=300&amp;w=600&amp;ixlib=js-1.2.0 640w" 
  data-sizes="(min-width: 640px) 50vw, 100vw" 
  alt="Test image" data-v-57509004=""
  title="Title of the image"
