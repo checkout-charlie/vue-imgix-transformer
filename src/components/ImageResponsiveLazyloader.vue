@@ -4,7 +4,7 @@
        :data-src="transformedDataSrc"
        :data-srcset="transformedDataSrcset"
        :data-sizes="transformedDataSizes"
-       :class="cssClasses"
+       class="lazyload"
        :alt="alt"
        :title="title"
   />
@@ -50,10 +50,6 @@
         },
         type: Array
       },
-      classes: {
-        default: '',
-        type: String
-      },
       alt: {
         default: '',
         type: String
@@ -68,8 +64,7 @@
         transformedSrc: '',
         transformedDataSrc: {},
         transformedDataSrcset: [],
-        transformedDataSizes: [],
-        cssClasses: ''
+        transformedDataSizes: []
       }
     },
     created() {
@@ -80,7 +75,6 @@
         this.transformedSrc = this.transformImgixUrl(
           this.url, this.src.options
         )
-        this.cssClasses = `lazyload ${this.classes}`
         this.transformedDataSrc = this.transformImgixUrl(
           this.url, this.dataSrc.options
         )
