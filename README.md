@@ -48,7 +48,7 @@ In the options:
             }
           ]"
           :data-sizes="['(min-width: 640px) 50vw', '100vw']" 
-          classes="image-big right"
+          class="image-big right"
           alt="Test image"
           title="Title of the image"
         />
