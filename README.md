@@ -12,7 +12,7 @@ import imgixTransformer from '@sparwelt/vue-imgix-transformer'
 
 Vue.use(imgixTransformer, {
   domains: example.imgix.net,
-  organizationUrlReg: /example.com/,
+  organizationUrlReg: [/example.com/],
   imgixImageConfigs: myImageConfigs
 })
 ```
