@@ -1,19 +1,25 @@
 import ImgixClient from 'imgix-core-js'
 
 export default class ImgixTransformer {
-  constructor(domains, organizationUrlReg = /\b\B/) {
-    this.client = new ImgixClient({domains})
+  constructor(imgixOptions, organizationUrlRegs = [/\b\B/]) {
+    this.client = new ImgixClient(imgixOptions)
 
-    this.organizationUrlReg = organizationUrlReg
+    this.organizationUrlRegs = organizationUrlRegs
   }
 
   transformUrl(originalUrl, options) {
     const completeUrlReg = /http/
-    const orgUrlReg = this.organizationUrlReg
+    const orgUrlRegs = this.organizationUrlRegs
+    let orgUrlReg = null
     let imagePath = originalUrl
 
     if (completeUrlReg.test(originalUrl)) {
-      if (!orgUrlReg.test(originalUrl)) {
+      const isOrgUrl = orgUrlRegs.some(reg => {
+        orgUrlReg = reg
+        return reg.test(originalUrl)
+      })
+
+      if (!isOrgUrl) {
         return originalUrl
       }
 

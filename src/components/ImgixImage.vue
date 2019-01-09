@@ -11,25 +11,21 @@
 </template>
 <script>
   export default {
-    name: 'ImageResponsiveLazyloader',
+    name: 'ImgixImage',
     props: {
-      url: {
+      src: {
         default: '',
         type: String
       },
-      src: {
+      srcOptions: {
         default() {
-          return {
-            options: {}
-          }
+          return {}
         },
         type: Object
       },
-      dataSrc: {
+      dataSrcOptions: {
         default() {
-          return {
-            options: {}
-          }
+          return {}
         },
         type: Object
       },
@@ -57,6 +53,10 @@
       title: {
         default: '',
         type: String
+      },
+      config: {
+        default: null,
+        type: Object
       }
     },
     data() {
@@ -72,19 +72,24 @@
     },
     methods: {
       transformData() {
+        const srcOptions = this.config ? this.config.srcOptions : this.srcOptions
+        const dataSrcOptions = this.config ? this.config.dataSrcOptions : this.dataSrcOptions
+        const dataSrcset =  this.config ? this.config.dataSrcset : this.dataSrcset
+        const dataSizes =  this.config ? this.config.dataSizes : this.dataSizes
+
         this.transformedSrc = this.transformImgixUrl(
-          this.url, this.src.options
+          this.src, srcOptions
         )
         this.transformedDataSrc = this.transformImgixUrl(
-          this.url, this.dataSrc.options
+          this.src, dataSrcOptions
         )
-        this.transformedDataSrcset = this.dataSrcset.map(item => {
+        this.transformedDataSrcset = dataSrcset.map(item => {
           const {options, width} = item
-          const transformedUrl = this.transformImgixUrl(this.url, options)
+          const transformedUrl = this.transformImgixUrl(this.src, options)
 
           return `${transformedUrl} ${width}`
         }).join(', ')
-        this.transformedDataSizes = this.dataSizes.join(', ')
+        this.transformedDataSizes = dataSizes.join(', ')
       }
     }
   }

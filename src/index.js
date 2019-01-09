@@ -1,28 +1,33 @@
-import ImageHtmlTransformer from './components/ImageHtmlTransformer.vue'
-import ImageResponsiveLazyloader from './components/ImageResponsiveLazyloader.vue'
+import ImagixHtmlTransformer from './components/ImagixHtmlTransformer.vue'
+import ImgixImage from './components/ImgixImage.vue'
 import ImgixTransformer from './imgixTransformer.js'
 
 const plugin = {
   install(Vue, options = {}) {
-    const {domains, organizationUrlReg} = options
-    const imgTransformer = new ImgixTransformer(domains, organizationUrlReg)
+    const { imgixOptions, organizationUrlRegs, imgixImageConfigs } = options
+    const imgixTransformer = new ImgixTransformer(imgixOptions, organizationUrlRegs)
 
-    Vue.prototype.$imgTransformer = imgTransformer
+    Vue.prototype.$imgixTransformer = imgixTransformer
 
-    Vue.component(ImageHtmlTransformer.name, ImageHtmlTransformer)
-    Vue.component(ImageResponsiveLazyloader.name, ImageResponsiveLazyloader)
+    Vue.component(ImagixHtmlTransformer.name, ImagixHtmlTransformer)
+    Vue.component(ImgixImage.name, ImgixImage)
 
-    Vue.filter('transformUrl', (url, opts) => {
-      return imgTransformer.transformUrl(url, opts)
+    Vue.filter('imgixTransformUrl', (url, opts) => {
+      return imgixTransformer.transformUrl(url, opts)
     })
 
     Vue.mixin({
+      data() {
+        return {
+          imgixImageConfigs
+        }
+      },
       methods: {
         transformImgixUrl(url, options) {
-          return imgTransformer.transformUrl(url, options)
+          return imgixTransformer.transformUrl(url, options)
         },
         transformImgixUrlsInHtml(html, options) {
-          return imgTransformer.transformHtml(html, options)
+          return imgixTransformer.transformHtml(html, options)
         }
       }
     })
