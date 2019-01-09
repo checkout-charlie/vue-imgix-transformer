@@ -7,7 +7,7 @@
 <script>
 
 export default {
-  name: 'ImageHtmlTransformer',
+  name: 'ImagixHtmlTransformer',
   props: {
     html: {
       default: null,
