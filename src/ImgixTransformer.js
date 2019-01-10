@@ -1,34 +1,50 @@
 import ImgixClient from 'imgix-core-js'
 
 export default class ImgixTransformer {
-  constructor(imgixOptions, organizationUrlRegs = [/\b\B/]) {
-    this.client = new ImgixClient(imgixOptions)
+  constructor(imgixCdnConfigs) {
+    this.imgixCdnConfigs = imgixCdnConfigs
+  }
 
-    this.organizationUrlRegs = organizationUrlRegs
+  getConfigName(completeUrl) {
+    const cdnConfigs = this.imgixCdnConfigs
+
+    return Object.keys(cdnConfigs).filter(key => {
+      return completeUrl.indexOf(cdnConfigs[key].sourceDomain) > -1
+    })[0]
+  }
+
+  getClient(originalUrl) {
+    const absolutePathReg = /http/
+    const cdnConfigs = this.imgixCdnConfigs
+    let cdnConfig = cdnConfigs[Object.keys(cdnConfigs)[0]].cdnOptions
+
+    if (absolutePathReg.test(originalUrl)) {
+      const configName = this.getConfigName(originalUrl)
+
+      if ("undefined" !== typeof configName) {
+        cdnConfig = cdnConfigs[configName].cdnOptions
+      }
+    }
+
+    return new ImgixClient(cdnConfig)
   }
 
   transformUrl(originalUrl, options) {
-    const completeUrlReg = /http/
-    const orgUrlRegs = this.organizationUrlRegs
-    let orgUrlReg = null
+    const absolutePathReg = /http/
     let imagePath = originalUrl
 
-    if (completeUrlReg.test(originalUrl)) {
-      const isOrgUrl = orgUrlRegs.some(reg => {
-        orgUrlReg = reg
-        return reg.test(originalUrl)
-      })
+    if (absolutePathReg.test(originalUrl)) {
+      const configName = this.getConfigName(originalUrl)
 
-      if (!isOrgUrl) {
+      if ("undefined" === typeof configName) {
         return originalUrl
       }
 
-      const urlSplit = originalUrl.split(orgUrlReg)
-      urlSplit.shift()
-      imagePath = urlSplit[0]
+      const sourceDomain = this.imgixCdnConfigs[configName].sourceDomain
+      imagePath = originalUrl.split(sourceDomain).pop()
     }
 
-    return decodeURIComponent(this.client.buildURL(imagePath, options))
+    return decodeURIComponent(this.getClient(originalUrl).buildURL(imagePath, options))
   }
 
   generateImageElement(originalUrl, options) {
