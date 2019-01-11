@@ -11,17 +11,34 @@ import Vue from 'vue'
 import imgixTransformer from '@sparwelt/vue-imgix-transformer'
 
 Vue.use(imgixTransformer, {
-  domains: example.imgix.net,
-  organizationUrlReg: [/example.com/],
+  imgixCdnConfigs: myImgixCdnConfigs,
   imgixImageConfigs: myImageConfigs
 })
 ```
 
-In the options: 
 
-**domains**: your Imgix domain(s).
+In the options:
 
-**organizationUrlReg**: the regex to check whether the url is your organization's complete url in raw html. If a complete image url including the company's original domain is used as the original image url, the image url's domain will be replaced by your Imgix domain. **E.g.** `https://example.com/my-image.jpg` will be converted to `https://example.imgix.net/my-image.jpg`.
+**imgixCdnConfigs**: required. It contains your CDN related configurations.
+The format is:
+
+````javascript
+const myImgixCdnConfigs = {
+  myConfig1: {
+    cdnOptions: {
+      domains: example.imgix.net
+    },
+    sourceDomain: 'www.example.come'
+  },
+  myConfig2: {
+    cdnOptions: {
+      domains: 'example2.imgix.net'
+    },
+    sourceDomain: 'www.example2.com'
+  }
+}
+````
+If a given image URL is an absolute path, **sourceDomain** will be used for checking whether the URL contains the domain. If it does, the domain will be replaced with your Imgix domain in **cdnOptions**. The first configuration set will be used as a default configuration if given image URL is a relative path or no matching domain is found. **cdnOptions** is the options for your Imgix CDN passed to `imgix-core-js` instance. Please see  [imgix-core-js](https://github.com/imgix/imgix-core-js)
 
 **imgixImageConfigs**: this is optional. You can define the image element configurations `srcOptions`, `dataSrcOptions`, `dataSrcset`, `dataSizes` such as:
 

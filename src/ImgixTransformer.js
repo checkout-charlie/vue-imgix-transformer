@@ -3,50 +3,56 @@ import ImgixClient from 'imgix-core-js'
 export default class ImgixTransformer {
   constructor(imgixCdnConfigs) {
     this.imgixCdnConfigs = imgixCdnConfigs
+    this.clients = this.getClients(imgixCdnConfigs)
   }
 
-  getConfigName(completeUrl) {
+  getClients(configs) {
+    const clients = {}
+
+    for (let configName in configs) {
+      let { cdnOptions } = configs[configName]
+      clients[configName] = new ImgixClient(cdnOptions)
+    }
+
+    return clients
+  }
+
+  getClient(configName) {
+    if ('undefined' !== typeof configName) {
+      return this.clients[configName]
+    }
+
+    for (let name in this.imgixCdnConfigs) {
+      return this.clients[name]
+    }
+  }
+
+  getConfigName(url) {
     const cdnConfigs = this.imgixCdnConfigs
 
     return Object.keys(cdnConfigs).filter(key => {
-      return completeUrl.indexOf(cdnConfigs[key].sourceDomain) > -1
+      return url.indexOf(cdnConfigs[key].sourceDomain) > -1
     })[0]
   }
 
-  getClient(originalUrl) {
-    const absolutePathReg = /http/
-    const cdnConfigs = this.imgixCdnConfigs
-    let cdnConfig = cdnConfigs[Object.keys(cdnConfigs)[0]].cdnOptions
-
-    if (absolutePathReg.test(originalUrl)) {
-      const configName = this.getConfigName(originalUrl)
-
-      if ("undefined" !== typeof configName) {
-        cdnConfig = cdnConfigs[configName].cdnOptions
-      }
-    }
-
-    return new ImgixClient(cdnConfig)
-  }
-
   transformUrl(originalUrl, options) {
-    const absolutePathReg = /http/
+    const configName = this.getConfigName(originalUrl)
+    const absolutePathReg = /^http/
     let imagePath = originalUrl
 
     if (absolutePathReg.test(originalUrl)) {
-      const configName = this.getConfigName(originalUrl)
-
-      if ("undefined" === typeof configName) {
+      if ('undefined' === typeof configName) {
         return originalUrl
       }
 
-      const sourceDomain = this.imgixCdnConfigs[configName].sourceDomain
+      const { sourceDomain } = this.imgixCdnConfigs[configName]
       imagePath = originalUrl.split(sourceDomain).pop()
     }
 
-    return decodeURIComponent(this.getClient(originalUrl).buildURL(imagePath, options))
+    return decodeURIComponent(this.getClient(configName).buildURL(imagePath, options))
   }
 
+  /* deprecated */
   generateImageElement(originalUrl, options) {
     const imgElement = document.createElement('img')
     const url = this.transformUrl(originalUrl, options)
