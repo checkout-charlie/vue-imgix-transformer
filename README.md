@@ -128,7 +128,7 @@ const myImageConfigs = {
 
 ````javascript
 <ImgixImage
-  src="/uploads/assets-01/shops/0-sw-neuesdesign/deinhandy-de2.jpg"
+  src="/images/my-test-image.jpg"
   :config="imgixImageConfigs.pageA"
   class="image-big right xxx"
   alt="Test image"
