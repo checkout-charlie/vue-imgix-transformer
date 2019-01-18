@@ -1,6 +1,6 @@
 {
   "name": "@sparwelt/vue-imgix-transformer",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Vue component plugin to convert Imgix urls",
   "author": "Sparwelt",
   "license": "MIT",

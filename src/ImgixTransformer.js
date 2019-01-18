@@ -1,5 +1,8 @@
 import ImgixClient from 'imgix-core-js'
 
+const absolutePathReg = /^http/
+const imgElementSearchReg = /(<img[^>]+>)/gi
+
 export default class ImgixTransformer {
   constructor(imgixCdnConfigs) {
     this.imgixCdnConfigs = imgixCdnConfigs
@@ -7,7 +10,7 @@ export default class ImgixTransformer {
   }
 
   getClients(configs) {
-    const clients = {}
+    let clients = {}
 
     for (let configName in configs) {
       let { cdnOptions } = configs[configName]
@@ -28,7 +31,7 @@ export default class ImgixTransformer {
   }
 
   getConfigName(url) {
-    const cdnConfigs = this.imgixCdnConfigs
+    let cdnConfigs = this.imgixCdnConfigs
 
     return Object.keys(cdnConfigs).filter(key => {
       return url.indexOf(cdnConfigs[key].sourceDomain) > -1
@@ -36,8 +39,7 @@ export default class ImgixTransformer {
   }
 
   transformUrl(originalUrl, options) {
-    const configName = this.getConfigName(originalUrl)
-    const absolutePathReg = /^http/
+    let configName = this.getConfigName(originalUrl)
     let imagePath = originalUrl
 
     if (absolutePathReg.test(originalUrl)) {
@@ -45,7 +47,7 @@ export default class ImgixTransformer {
         return originalUrl
       }
 
-      const { sourceDomain } = this.imgixCdnConfigs[configName]
+      let { sourceDomain } = this.imgixCdnConfigs[configName]
       imagePath = originalUrl.split(sourceDomain).pop()
     }
 
@@ -54,16 +56,14 @@ export default class ImgixTransformer {
 
   /* deprecated */
   generateImageElement(originalUrl, options) {
-    const imgElement = document.createElement('img')
-    const url = this.transformUrl(originalUrl, options)
+    let imgElement = document.createElement('img')
+    let url = this.transformUrl(originalUrl, options)
     imgElement.setAttribute('src', url)
 
     return imgElement
   }
 
   transformHtml(originalHtml, options) {
-    const search = /(<img[^>]+>)/gi
-
     if ('undefined' === typeof document) {
       return
     }
@@ -77,6 +77,6 @@ export default class ImgixTransformer {
       return wrapperEl.innerHTML
     }
 
-    return originalHtml.replace(search, replacer)
+    return originalHtml.replace(imgElementSearchReg, replacer)
   }
 }
