@@ -1,4 +1,4 @@
-import ImgixClient from 'imgix-core-js'
+import ImgixClient from './SwImgixClient'
 
 const absolutePathReg = /^http/
 const imgElementSearchReg = /(<img[^>]+>)/gi
