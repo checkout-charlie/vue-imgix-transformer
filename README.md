@@ -104,6 +104,7 @@ const myImageConfigs = {
   ]"
   :data-sizes="['(min-width: 640px) 50vw', '100vw']" 
   class="image-big right"
+  id="image-test"
   alt="Test image"
   title="Title of the image"
 />
