@@ -7,6 +7,7 @@
        class="lazyload"
        :alt="alt"
        :title="title"
+       :id="id"
   />
 </template>
 <script>
@@ -52,6 +53,10 @@
       },
       title: {
         default: '',
+        type: String
+      },
+      id: {
+        default: null,
         type: String
       },
       config: {
