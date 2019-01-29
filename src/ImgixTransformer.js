@@ -4,7 +4,7 @@ const absolutePathReg = /^https?/
 const imgElementSearchReg = /(<img[^>]+>)/gi
 
 export default class ImgixTransformer {
-  constructor(imgixCdnConfigs, imgixModule = null) {
+  constructor(imgixCdnConfigs, imgixModule = ImgixClient) {
     this.imgixCdnConfigs = imgixCdnConfigs
     this.imgixModule = imgixModule
     this.clients = this.getClients(imgixCdnConfigs)
@@ -15,7 +15,7 @@ export default class ImgixTransformer {
 
     for (let configName in configs) {
       let { cdnOptions } = configs[configName]
-      clients[configName] = null === this.imgixModule ? new ImgixClient(cdnOptions) : new this.imgixModule(cdnOptions)
+      clients[configName] = new this.imgixModule(cdnOptions)
     }
 
     return clients
