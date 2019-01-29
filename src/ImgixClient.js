@@ -1,78 +1,78 @@
 const DEFAULTS = {
   domains: []
-};
+}
 
 class ImgixClient {
   constructor(options) {
-    let key, val;
+    let key, val
 
-    this.settings = {};
+    this.settings = {}
 
     for (key in DEFAULTS) {
-      val = DEFAULTS[key];
-      this.settings[key] = val;
+      val = DEFAULTS[key]
+      this.settings[key] = val
     }
 
     for (key in options) {
-      val = options[key];
-      this.settings[key] = val;
+      val = options[key]
+      this.settings[key] = val
     }
 
     if (!Array.isArray(this.settings.domains)) {
-      this.settings.domains = [this.settings.domains];
+      this.settings.domains = [this.settings.domains]
     }
 
     if (!this.settings.host && this.settings.domains.length === 0) {
-      throw new Error('ImgixClient must be passed valid domain(s)');
+      throw new Error('ImgixClient must be passed valid domain(s)')
     }
   }
 
   buildURL(path, params) {
-    path = this._sanitizePath(path);
+    path = this._sanitizePath(path)
 
     if (params == null) {
-      params = {};
+      params = {}
     }
 
-    let queryParams = this._buildParams(params);
+    let queryParams = this._buildParams(params)
 
-    return 'https://' + this._getDomain() + path + queryParams;
+    return `https://${this._getDomain()}${path}${queryParams}`
   }
 
   _getDomain() {
-    return this.settings.domains[0];
+    return this.settings.domains[0]
   }
 
   _sanitizePath(path) {
-    path = path.replace(/^\//, '');
+    path = path.replace(/^\//, '')
 
     if (/^https?:\/\//.test(path)) {
-      path = encodeURIComponent(path);
+      path = encodeURIComponent(path)
     } else {
-      path = encodeURI(path);
+      path = encodeURI(path)
     }
 
-    return '/' + path;
+    return '/' + path
   }
 
   _buildParams(params) {
-    let queryParams = [];
-    let key, val, encodedKey, encodedVal;
+    let queryParams = []
+    let key, val, encodedKey, encodedVal
 
     for (key in params) {
-      val = params[key];
-      encodedKey = encodeURIComponent(key);
-      encodedVal = encodeURIComponent(val);
+      val = params[key]
+      encodedKey = encodeURIComponent(key)
+      encodedVal = encodeURIComponent(val)
 
-      queryParams.push(encodedKey + "=" + encodedVal);
+      queryParams.push(encodedKey + "=" + encodedVal)
     }
 
     if (queryParams[0]) {
-      queryParams[0] = "?" + queryParams[0];
+      queryParams[0] = "?" + queryParams[0]
     }
 
-    return queryParams.join('&');
+    return queryParams.join('&')
   }
 }
 
-export default ImgixClient;
+export default ImgixClient
