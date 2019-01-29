@@ -1,11 +1,12 @@
-import ImgixClient from 'imgix-core-js'
+import ImgixClient from './ImgixClient'
 
-const absolutePathReg = /^http/
+const absolutePathReg = /^https?/
 const imgElementSearchReg = /(<img[^>]+>)/gi
 
 export default class ImgixTransformer {
-  constructor(imgixCdnConfigs) {
+  constructor(imgixCdnConfigs, imgixModule = ImgixClient) {
     this.imgixCdnConfigs = imgixCdnConfigs
+    this.imgixModule = imgixModule
     this.clients = this.getClients(imgixCdnConfigs)
   }
 
@@ -14,7 +15,7 @@ export default class ImgixTransformer {
 
     for (let configName in configs) {
       let { cdnOptions } = configs[configName]
-      clients[configName] = new ImgixClient(cdnOptions)
+      clients[configName] = new this.imgixModule(cdnOptions)
     }
 
     return clients
@@ -32,7 +33,6 @@ export default class ImgixTransformer {
 
   getConfigName(url) {
     let cdnConfigs = this.imgixCdnConfigs
-
     return Object.keys(cdnConfigs).filter(key => {
       return url.indexOf(cdnConfigs[key].sourceDomain) > -1
     })[0]

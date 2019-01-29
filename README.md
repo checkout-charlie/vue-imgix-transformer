@@ -13,6 +13,7 @@ import imgixTransformer from '@sparwelt/vue-imgix-transformer'
 Vue.use(imgixTransformer, {
   imgixCdnConfigs: myImgixCdnConfigs,
   imgixImageConfigs: myImageConfigs
+  imgixModule: imgixCoreJs // Optionally you can pass the imgix-core-js module instead of our minimal functionalities
 })
 ```
 
