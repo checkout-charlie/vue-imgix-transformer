@@ -64,37 +64,35 @@
         type: Object
       }
     },
-    data() {
-      return {
-        transformedSrc: '',
-        transformedDataSrc: {},
-        transformedDataSrcset: [],
-        transformedDataSizes: []
-      }
-    },
-    created() {
-      this.transformData()
-    },
-    methods: {
-      transformData() {
+    computed: {
+      transformedSrc: function() {
         const srcOptions = this.config ? this.config.srcOptions : this.srcOptions
-        const dataSrcOptions = this.config ? this.config.dataSrcOptions : this.dataSrcOptions
-        const dataSrcset =  this.config ? this.config.dataSrcset : this.dataSrcset
-        const dataSizes =  this.config ? this.config.dataSizes : this.dataSizes
 
-        this.transformedSrc = this.transformImgixUrl(
+        return this.transformImgixUrl(
           this.src, srcOptions
         )
-        this.transformedDataSrc = this.transformImgixUrl(
+      },
+      transformedDataSrc: function() {
+        const dataSrcOptions = this.config ? this.config.dataSrcOptions : this.dataSrcOptions
+
+        return this.transformImgixUrl(
           this.src, dataSrcOptions
         )
-        this.transformedDataSrcset = dataSrcset.map(item => {
+      },
+      transformedDataSrcset: function() {
+        const dataSrcset =  this.config ? this.config.dataSrcset : this.dataSrcset
+
+        return dataSrcset.map(item => {
           const {options, width} = item
           const transformedUrl = this.transformImgixUrl(this.src, options)
 
           return `${transformedUrl} ${width}`
         }).join(', ')
-        this.transformedDataSizes = dataSizes.join(', ')
+      },
+      transformedDataSizes: function() {
+        const dataSizes =  this.config ? this.config.dataSizes : this.dataSizes
+
+        return dataSizes.join(', ')
       }
     }
   }

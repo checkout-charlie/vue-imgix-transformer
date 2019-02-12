@@ -64,17 +64,17 @@ export default class ImgixTransformer {
   }
 
   transformHtml(originalHtml, options) {
-    if ('undefined' === typeof document) {
-      return
-    }
-
     const replacer = match => {
-      const wrapperEl = document.createElement('div')
-      wrapperEl.innerHTML = match
-      const imagePath = wrapperEl.firstChild.getAttribute('src')
-      wrapperEl.firstChild.src = this.transformUrl(imagePath, options)
+      const findImgUrlReg = /(src=")(.*?)"/gmi
 
-      return wrapperEl.innerHTML
+      let newElement = match.replace(findImgUrlReg, (match, p1, p2) => {
+
+        p2 = this.transformUrl(p2, options) + `"`;
+
+        return p1 + p2;
+      });
+
+      return newElement
     }
 
     return originalHtml.replace(imgElementSearchReg, replacer)

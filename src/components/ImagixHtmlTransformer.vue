@@ -6,34 +6,24 @@
 </template>
 <script>
 
-export default {
-  name: 'ImagixHtmlTransformer',
-  props: {
-    html: {
-      default: null,
-      type: String
+  export default {
+    name: 'ImagixHtmlTransformer',
+    props: {
+      html: {
+        default: null,
+        type: String
+      },
+      options: {
+        type: Object
+      }
     },
-    options: {
-      type: Object
-    }
-  },
-  data() {
-    return {
-      transformedHtml: ''
-    }
-  },
-  created() {
-    if (this.html) {
-      this.transformHtml()
-    }
-  },
-  methods: {
-    transformHtml() {
-      this.transformedHtml = this.transformImgixUrlsInHtml(
-        this.html,
-        this.options
-      )
+    computed: {
+      transformedHtml: function() {
+        return this.transformImgixUrlsInHtml(
+          this.html,
+          this.options
+        )
+      }
     }
   }
-}
 </script>
