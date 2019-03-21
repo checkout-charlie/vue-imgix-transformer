@@ -1,6 +1,6 @@
 import ImagixHtmlTransformer from './components/ImagixHtmlTransformer.vue'
 import ImgixImage from './components/ImgixImage.vue'
-import ImgixTransformer from './imgixTransformer.js'
+import ImgixTransformer from './ImgixTransformer.js'
 
 const plugin = {
   install(Vue, options = {}) {
