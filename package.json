@@ -19,9 +19,6 @@
     "start": "yarn build",
     "build": "rollup -c && minify dist/vue-imgix-transformer.js --out-file dist/vue-imgix-transformer.min.js --mangle.keepClassName"
   },
-  "dependencies": {
-    "imgix-core-js": "^1.2.0"
-  },
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
