@@ -91,8 +91,8 @@ const myImageConfigs = {
 ```vue
 <ImgixImage
   src="my-image.jpg"
-  :src="{options: {h: 150, w: 300}}"
-  :data-src="{options: {h: 400, w: 600}}"
+  :src-options="{h: 150, w: 300}"
+  :data-src-options="{h: 400, w: 600}"
   :data-srcset="[
     {
       options: {h: 200, w: 300},
