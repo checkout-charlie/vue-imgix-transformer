@@ -72,7 +72,9 @@ export default class ImgixTransformer {
       const wrapperEl = document.createElement('div')
       wrapperEl.innerHTML = match
       const imagePath = wrapperEl.firstChild.getAttribute('src')
-      wrapperEl.firstChild.src = this.transformUrl(imagePath, options)
+      wrapperEl.firstChild.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+      wrapperEl.firstChild.dataset.src = this.transformUrl(imagePath, options)
+      wrapperEl.firstChild.classList.add('lazyload')
 
       return wrapperEl.innerHTML
     }
