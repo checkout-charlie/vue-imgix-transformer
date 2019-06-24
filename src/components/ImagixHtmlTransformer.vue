@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <!-- eslint-disable-next-line -->
-    <div v-if="html" v-html="transformedHtml"></div>
-  </div>
+  <!-- eslint-disable-next-line -->
+  <div v-if="html" v-html="transformedHtml"></div>
 </template>
 <script>
 
