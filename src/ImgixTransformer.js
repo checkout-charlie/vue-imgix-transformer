@@ -65,7 +65,7 @@ export default class ImgixTransformer {
 
   transformHtml(originalHtml, options) {
     if ('undefined' === typeof document) {
-      return
+      return originalHtml
     }
 
     const replacer = match => {
