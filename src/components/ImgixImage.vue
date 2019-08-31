@@ -4,7 +4,6 @@
        :data-src="transformedDataSrc"
        :data-srcset="transformedDataSrcset"
        :data-sizes="transformedDataSizes"
-       class="lazyload"
        :alt="alt"
        :title="title"
        :id="id"
