@@ -2,11 +2,13 @@
 
 ## Before installation
 
-### Before 4.0.0:
-`lazyload` CSS class is included for the `lazysizes` plugin to use for lazyloading.
+**Before 4.0.0**
 
-### From 4.0.0
-`lazyload` CSS class is removed in order to streamline the library.
+`lazyload` CSS class is included for the `lazysizes` plugin to use for lazyloading
+
+**From 4.0.0**
+
+`lazyload` CSS class is removed in order to streamline the library
 
 ## Installation
 
