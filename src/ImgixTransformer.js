@@ -1,10 +1,6 @@
 import ImgixClient from './ImgixClient'
 
 const absolutePathReg = /^https?/
-const imgElementReg = /(<img[^>]+>)/gi
-const srcReg = /src="([^"]+)"/i
-const imgElementSegsReg = /([\s\S]*) (src="[^"]+") ([\s\S]*)/gi
-const pixel = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
 
 export default class ImgixTransformer {
   constructor(imgixCdnConfigs, imgixModule = ImgixClient) {
@@ -58,14 +54,14 @@ export default class ImgixTransformer {
   }
 
   transformHtml(originalHtml, options) {
-    const replacer = match => {
-      return match.replace(imgElementSegsReg, (match, p1, p2, p3) => {
-        let imagePath = p2.match(srcReg)[1]
+    const imgReplaceReg = /<(img[^>]+)src="([^"]+)("[^>]*)>/gi
+    // get img elements, image path the rest of the element
+    const pixel = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
 
-        return `${p1} src="${pixel}" data-src="${this.transformUrl(imagePath, options)}" ${p3}`
-      })
+    const replacer = (match, start, imagePath, end) => {
+      return `<${start}src="${pixel}" data-src="${this.transformUrl(imagePath, options)}"${end}>`
     }
 
-    return originalHtml.replace(imgElementReg, replacer)
+    return originalHtml.replace(imgReplaceReg, replacer)
   }
 }
