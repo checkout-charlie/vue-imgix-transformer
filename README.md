@@ -1,8 +1,12 @@
 # vue-imgix-transformer
 
-## Prerequisite
+## Before installation
 
-Please install `lazysizes` in your application
+### Before 4.0.0:
+`lazyload` CSS class is included for the `lazysizes` plugin to use for lazyloading.
+
+### From 4.0.0
+`lazyload` CSS class is removed in order to streamline the library.
 
 ## Installation
 
@@ -86,7 +90,7 @@ const myImageConfigs = {
 
 `<ImagixHtmlTransformer html="<img src='my-image.jpg'>" />`
 
-* Responsive lazyload component
+* Image component
 
 ```vue
 <ImgixImage
@@ -121,7 +125,7 @@ const myImageConfigs = {
  data-sizes="(min-width: 640px) 50vw, 100vw" 
  alt="Test image" data-v-57509004=""
  title="Title of the image"
- class="image-big right lazyload" 
+ class="image-big right" 
  sizes="(min-width: 640px) 50vw, 100vw">
  -->
  
