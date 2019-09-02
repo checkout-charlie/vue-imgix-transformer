@@ -1,7 +1,6 @@
 import ImgixClient from './ImgixClient'
 
 const absolutePathReg = /^https?/
-const imgElementSearchReg = /(<img[^>]+>)/gi
 
 export default class ImgixTransformer {
   constructor(imgixCdnConfigs, imgixModule = ImgixClient) {
@@ -54,31 +53,15 @@ export default class ImgixTransformer {
     return decodeURIComponent(this.getClient(configName).buildURL(imagePath, options))
   }
 
-  /* deprecated */
-  generateImageElement(originalUrl, options) {
-    let imgElement = document.createElement('img')
-    let url = this.transformUrl(originalUrl, options)
-    imgElement.setAttribute('src', url)
-
-    return imgElement
-  }
-
   transformHtml(originalHtml, options) {
-    if ('undefined' === typeof document) {
-      return originalHtml
+    const imgReplaceReg = /<(img[^>]+)src="([^"]+)("[^>]*)>/gi
+    // get img elements, image path the rest of the element
+    const pixel = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+
+    const replacer = (match, start, imagePath, end) => {
+      return `<${start}src="${pixel}" data-src="${this.transformUrl(imagePath, options)}"${end}>`
     }
 
-    const replacer = match => {
-      const wrapperEl = document.createElement('div')
-      wrapperEl.innerHTML = match
-      const imagePath = wrapperEl.firstChild.getAttribute('src')
-      wrapperEl.firstChild.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-      wrapperEl.firstChild.dataset.src = this.transformUrl(imagePath, options)
-      wrapperEl.firstChild.classList.add('lazyload')
-
-      return wrapperEl.innerHTML
-    }
-
-    return originalHtml.replace(imgElementSearchReg, replacer)
+    return originalHtml.replace(imgReplaceReg, replacer)
   }
 }
