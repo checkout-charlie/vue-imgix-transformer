@@ -59,7 +59,7 @@ export default class ImgixTransformer {
     const pixel = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
 
     const replacer = (match, start, imagePath, end) => {
-      return `<${start}src="${pixel}" data-src="${this.transformUrl(imagePath, options)}"${end}>`
+      return `<${start}src="${pixel}" data-src="${this.transformUrl(imagePath, options)}${end}>`
     }
 
     return originalHtml.replace(imgReplaceReg, replacer)
