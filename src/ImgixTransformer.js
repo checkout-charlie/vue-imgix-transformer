@@ -38,6 +38,11 @@ export default class ImgixTransformer {
   }
 
   transformUrl(originalUrl, options) {
+    if (!originalUrl) {
+      console.warn('Missing or invalid img src found:', originalUrl)
+      return ''
+    }
+
     let configName = this.getConfigName(originalUrl)
     let imagePath = originalUrl
 
