@@ -40,7 +40,8 @@ export default class ImgixTransformer {
   transformUrl(originalUrl, options) {
     if (!originalUrl) {
       console.warn('Missing or invalid img src found:', originalUrl)
-      return ''
+
+      return 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
     }
 
     let configName = this.getConfigName(originalUrl)
