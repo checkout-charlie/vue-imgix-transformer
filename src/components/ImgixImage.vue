@@ -4,9 +4,6 @@
        :data-src="transformedDataSrc"
        :data-srcset="transformedDataSrcset"
        :data-sizes="transformedDataSizes"
-       :alt="alt"
-       :title="title"
-       :id="id"
   />
 </template>
 <script>
@@ -45,18 +42,6 @@
           return ['auto']
         },
         type: Array
-      },
-      alt: {
-        default: '',
-        type: String
-      },
-      title: {
-        default: '',
-        type: String
-      },
-      id: {
-        default: null,
-        type: String
       },
       config: {
         default: null,
